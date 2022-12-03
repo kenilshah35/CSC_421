@@ -1,0 +1,191 @@
+kenilshah@linux200:~/LADR-2009-11A$ bin/prover9 -f q2a.txt
+============================== Prover9 ===============================
+Prover9 (64) version 2009-11A, November 2009.
+Process 440280 was started by kenilshah on linux200,
+Tue Nov 22 07:27:30 2022
+The command was "bin/prover9 -f q2a.txt".
+============================== end of head ===========================
+
+============================== INPUT =================================
+
+% Reading from file q2a.txt
+
+
+formulas(assumptions).
+(all x all y (horse(x) & dog(y) -> faster(x,y))).
+(exists y (greyhound(y) & (all z (rabbit(z) -> faster(y,z))))).
+(all y (greyhound(y) -> dog(y))).
+(all x all y all z (faster(x,y) & faster(y,z) -> faster(x,z))).
+end_of_list.
+
+formulas(goals).
+(all x all y (horse(x) & rabbit(y) -> faster(x,y))).
+end_of_list.
+
+============================== end of input ==========================
+
+============================== PROCESS NON-CLAUSAL FORMULAS ==========
+
+% Formulas that are not ordinary clauses:
+1 (all x all y (horse(x) & dog(y) -> faster(x,y))) # label(non_clause).  [assumption].
+2 (exists y (greyhound(y) & (all z (rabbit(z) -> faster(y,z))))) # label(non_clause).  [assumption].
+3 (all y (greyhound(y) -> dog(y))) # label(non_clause).  [assumption].
+4 (all x all y all z (faster(x,y) & faster(y,z) -> faster(x,z))) # label(non_clause).  [assumption].
+5 (all x all y (horse(x) & rabbit(y) -> faster(x,y))) # label(non_clause) # label(goal).  [goal].
+
+============================== end of process non-clausal formulas ===
+
+============================== PROCESS INITIAL CLAUSES ===============
+
+% Clauses before input processing:
+
+formulas(usable).
+end_of_list.
+
+formulas(sos).
+-horse(x) | -dog(y) | faster(x,y).  [clausify(1)].
+greyhound(c1).  [clausify(2)].
+-rabbit(x) | faster(c1,x).  [clausify(2)].
+-greyhound(x) | dog(x).  [clausify(3)].
+-faster(x,y) | -faster(y,z) | faster(x,z).  [clausify(4)].
+horse(c2).  [deny(5)].
+rabbit(c3).  [deny(5)].
+-faster(c2,c3).  [deny(5)].
+end_of_list.
+
+formulas(demodulators).
+end_of_list.
+
+============================== PREDICATE ELIMINATION =================
+
+Eliminating horse/1
+6 horse(c2).  [deny(5)].
+7 -horse(x) | -dog(y) | faster(x,y).  [clausify(1)].
+Derived: -dog(x) | faster(c2,x).  [resolve(6,a,7,a)].
+
+Eliminating greyhound/1
+8 -greyhound(x) | dog(x).  [clausify(3)].
+9 greyhound(c1).  [clausify(2)].
+Derived: dog(c1).  [resolve(8,a,9,a)].
+
+Eliminating rabbit/1
+10 rabbit(c3).  [deny(5)].
+11 -rabbit(x) | faster(c1,x).  [clausify(2)].
+Derived: faster(c1,c3).  [resolve(10,a,11,a)].
+
+Eliminating dog/1
+12 dog(c1).  [resolve(8,a,9,a)].
+13 -dog(x) | faster(c2,x).  [resolve(6,a,7,a)].
+Derived: faster(c2,c1).  [resolve(12,a,13,a)].
+
+============================== end predicate elimination =============
+
+Auto_denials:  (no changes).
+
+Term ordering decisions:
+Predicate symbol precedence:  predicate_order([ faster ]).
+Function symbol precedence:  function_order([ c1, c2, c3 ]).
+After inverse_order:  (no changes).
+Unfolding symbols: (none).
+
+Auto_inference settings:
+  % set(neg_binary_resolution).  % (HNE depth_diff=0)
+  % clear(ordered_res).  % (HNE depth_diff=0)
+  % set(ur_resolution).  % (HNE depth_diff=0)
+    % set(ur_resolution) -> set(pos_ur_resolution).
+    % set(ur_resolution) -> set(neg_ur_resolution).
+
+Auto_process settings:  (no changes).
+
+kept:      14 -faster(x,y) | -faster(y,z) | faster(x,z).  [clausify(4)].
+kept:      15 -faster(c2,c3).  [deny(5)].
+kept:      16 faster(c1,c3).  [resolve(10,a,11,a)].
+kept:      17 faster(c2,c1).  [resolve(12,a,13,a)].
+
+============================== end of process initial clauses ========
+
+============================== CLAUSES FOR SEARCH ====================
+
+% Clauses after input processing:
+
+formulas(usable).
+end_of_list.
+
+formulas(sos).
+14 -faster(x,y) | -faster(y,z) | faster(x,z).  [clausify(4)].
+15 -faster(c2,c3).  [deny(5)].
+16 faster(c1,c3).  [resolve(10,a,11,a)].
+17 faster(c2,c1).  [resolve(12,a,13,a)].
+end_of_list.
+
+formulas(demodulators).
+end_of_list.
+
+============================== end of clauses for search =============
+
+============================== SEARCH ================================
+
+% Starting search at 0.00 seconds.
+
+given #1 (I,wt=9): 14 -faster(x,y) | -faster(y,z) | faster(x,z).  [clausify(4)].
+
+given #2 (I,wt=3): 15 -faster(c2,c3).  [deny(5)].
+
+given #3 (I,wt=3): 16 faster(c1,c3).  [resolve(10,a,11,a)].
+-------- Proof 1 --------
+
+============================== PROOF =================================
+
+% Proof 1 at 0.00 (+ 0.01) seconds.
+% Length of proof is 19.
+% Level of proof is 4.
+% Maximum clause weight is 9.000.
+% Given clauses 3.
+
+1 (all x all y (horse(x) & dog(y) -> faster(x,y))) # label(non_clause).  [assumption].
+2 (exists y (greyhound(y) & (all z (rabbit(z) -> faster(y,z))))) # label(non_clause).  [assumption].
+3 (all y (greyhound(y) -> dog(y))) # label(non_clause).  [assumption].
+4 (all x all y all z (faster(x,y) & faster(y,z) -> faster(x,z))) # label(non_clause).  [assumption].
+5 (all x all y (horse(x) & rabbit(y) -> faster(x,y))) # label(non_clause) # label(goal).  [goal].
+6 horse(c2).  [deny(5)].
+7 -horse(x) | -dog(y) | faster(x,y).  [clausify(1)].
+8 -greyhound(x) | dog(x).  [clausify(3)].
+9 greyhound(c1).  [clausify(2)].
+10 rabbit(c3).  [deny(5)].
+11 -rabbit(x) | faster(c1,x).  [clausify(2)].
+12 dog(c1).  [resolve(8,a,9,a)].
+13 -dog(x) | faster(c2,x).  [resolve(6,a,7,a)].
+14 -faster(x,y) | -faster(y,z) | faster(x,z).  [clausify(4)].
+15 -faster(c2,c3).  [deny(5)].
+16 faster(c1,c3).  [resolve(10,a,11,a)].
+17 faster(c2,c1).  [resolve(12,a,13,a)].
+19 -faster(c2,c1).  [ur(14,b,16,a,c,15,a)].
+20 $F.  [resolve(19,a,17,a)].
+
+============================== end of proof ==========================
+
+============================== STATISTICS ============================
+
+Given=3. Generated=6. Kept=6. proofs=1.
+Usable=3. Sos=2. Demods=0. Limbo=0, Disabled=12. Hints=0.
+Kept_by_rule=0, Deleted_by_rule=0.
+Forward_subsumed=0. Back_subsumed=0.
+Sos_limit_deleted=0. Sos_displaced=0. Sos_removed=0.
+New_demodulators=0 (0 lex), Back_demodulated=0. Back_unit_deleted=0.
+Demod_attempts=0. Demod_rewrites=0.
+Res_instance_prunes=0. Para_instance_prunes=0. Basic_paramod_prunes=0.
+Nonunit_fsub_feature_tests=0. Nonunit_bsub_feature_tests=2.
+Megabytes=0.05.
+User_CPU=0.00, System_CPU=0.01, Wall_clock=0.
+
+============================== end of statistics =====================
+
+============================== end of search =========================
+
+THEOREM PROVED
+
+THEOREM PROVED
+
+Exiting with 1 proof.
+
+------ process 440280 exit (max_proofs) ------

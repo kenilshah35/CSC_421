@@ -1,0 +1,145 @@
+kenilshah@linux200:~/LADR-2009-11A$ bin/prover9 -f q2c.txt
+============================== Prover9 ===============================
+Prover9 (64) version 2009-11A, November 2009.
+Process 67074 was started by kenilshah on linux200,
+Thu Nov 17 20:36:41 2022
+The command was "bin/prover9 -f q2c.txt".
+============================== end of head ===========================
+
+============================== INPUT =================================
+
+% Reading from file q2c.txt
+
+
+formulas(assumptions).
+(all x (gardener(mine,x) -> military(x))).
+(all x (waterloo(x) -> old(x))).
+(all x (military(x) -> waterloo(x))).
+end_of_list.
+
+formulas(goals).
+(all x (gardener(mine,x) -> old(x))).
+end_of_list.
+
+============================== end of input ==========================
+
+============================== PROCESS NON-CLAUSAL FORMULAS ==========
+
+% Formulas that are not ordinary clauses:
+1 (all x (gardener(mine,x) -> military(x))) # label(non_clause).  [assumption].
+2 (all x (waterloo(x) -> old(x))) # label(non_clause).  [assumption].
+3 (all x (military(x) -> waterloo(x))) # label(non_clause).  [assumption].
+4 (all x (gardener(mine,x) -> old(x))) # label(non_clause) # label(goal).  [goal].
+
+============================== end of process non-clausal formulas ===
+
+============================== PROCESS INITIAL CLAUSES ===============
+
+% Clauses before input processing:
+
+formulas(usable).
+end_of_list.
+
+formulas(sos).
+-gardener(mine,x) | military(x).  [clausify(1)].
+-waterloo(x) | old(x).  [clausify(2)].
+-military(x) | waterloo(x).  [clausify(3)].
+gardener(mine,c1).  [deny(4)].
+-old(c1).  [deny(4)].
+end_of_list.
+
+formulas(demodulators).
+end_of_list.
+
+============================== PREDICATE ELIMINATION =================
+
+Eliminating gardener/2
+5 gardener(mine,c1).  [deny(4)].
+6 -gardener(mine,x) | military(x).  [clausify(1)].
+Derived: military(c1).  [resolve(5,a,6,a)].
+
+Eliminating waterloo/1
+7 -military(x) | waterloo(x).  [clausify(3)].
+8 -waterloo(x) | old(x).  [clausify(2)].
+Derived: -military(x) | old(x).  [resolve(7,b,8,a)].
+
+Eliminating old/1
+9 -military(x) | old(x).  [resolve(7,b,8,a)].
+10 -old(c1).  [deny(4)].
+Derived: -military(c1).  [resolve(9,b,10,a)].
+
+Eliminating military/1
+11 -military(c1).  [resolve(9,b,10,a)].
+12 military(c1).  [resolve(5,a,6,a)].
+Derived: $F.  [resolve(11,a,12,a)].
+
+============================== end predicate elimination =============
+
+Auto_denials:  (no changes).
+
+Term ordering decisions:
+Predicate symbol precedence:  predicate_order([ ]).
+Function symbol precedence:  function_order([ ]).
+After inverse_order:  (no changes).
+Unfolding symbols: (none).
+
+Auto_inference settings:
+  % set(neg_binary_resolution).  % (HNE depth_diff=0)
+  % clear(ordered_res).  % (HNE depth_diff=0)
+  % set(ur_resolution).  % (HNE depth_diff=0)
+    % set(ur_resolution) -> set(pos_ur_resolution).
+    % set(ur_resolution) -> set(neg_ur_resolution).
+
+Auto_process settings:  (no changes).
+
+-------- Proof 1 --------
+
+============================== PROOF =================================
+
+% Proof 1 at 0.00 (+ 0.01) seconds.
+% Length of proof is 13.
+% Level of proof is 4.
+% Maximum clause weight is 0.000.
+% Given clauses 0.
+
+1 (all x (gardener(mine,x) -> military(x))) # label(non_clause).  [assumption].
+2 (all x (waterloo(x) -> old(x))) # label(non_clause).  [assumption].
+3 (all x (military(x) -> waterloo(x))) # label(non_clause).  [assumption].
+4 (all x (gardener(mine,x) -> old(x))) # label(non_clause) # label(goal).  [goal].
+5 gardener(mine,c1).  [deny(4)].
+6 -gardener(mine,x) | military(x).  [clausify(1)].
+7 -military(x) | waterloo(x).  [clausify(3)].
+8 -waterloo(x) | old(x).  [clausify(2)].
+9 -military(x) | old(x).  [resolve(7,b,8,a)].
+10 -old(c1).  [deny(4)].
+11 -military(c1).  [resolve(9,b,10,a)].
+12 military(c1).  [resolve(5,a,6,a)].
+13 $F.  [resolve(11,a,12,a)].
+
+============================== end of proof ==========================
+
+============================== STATISTICS ============================
+
+Given=0. Generated=1. Kept=0. proofs=1.
+Usable=0. Sos=0. Demods=0. Limbo=0, Disabled=9. Hints=0.
+Kept_by_rule=0, Deleted_by_rule=0.
+Forward_subsumed=0. Back_subsumed=0.
+Sos_limit_deleted=0. Sos_displaced=0. Sos_removed=0.
+New_demodulators=0 (0 lex), Back_demodulated=0. Back_unit_deleted=0.
+Demod_attempts=0. Demod_rewrites=0.
+Res_instance_prunes=0. Para_instance_prunes=0. Basic_paramod_prunes=0.
+Nonunit_fsub_feature_tests=0. Nonunit_bsub_feature_tests=0.
+Megabytes=0.03.
+User_CPU=0.00, System_CPU=0.01, Wall_clock=0.
+
+============================== end of statistics =====================
+
+============================== end of search =========================
+
+THEOREM PROVED
+
+THEOREM PROVED
+
+Exiting with 1 proof.
+
+------ process 67074 exit (max_proofs) ------

@@ -1,0 +1,162 @@
+kenilshah@linux200:~/LADR-2009-11A$ bin/prover9 -f q2b.txt
+============================== Prover9 ===============================
+Prover9 (64) version 2009-11A, November 2009.
+Process 67058 was started by kenilshah on linux200,
+Thu Nov 17 20:35:28 2022
+The command was "bin/prover9 -f q2b.txt".
+============================== end of head ===========================
+
+============================== INPUT =================================
+
+% Reading from file q2b.txt
+
+
+formulas(assumptions).
+(all x (humingbird(x) -> rich(x))).
+(all x (bird(x) & large(x) -> -honey(x))).
+(all x (bird(x) & -honey(x) -> -rich(x))).
+(all x (humingbird(x) -> bird(x))).
+end_of_list.
+
+formulas(goals).
+(all x (humingbird(x) -> -large(x))).
+end_of_list.
+
+============================== end of input ==========================
+
+============================== PROCESS NON-CLAUSAL FORMULAS ==========
+
+% Formulas that are not ordinary clauses:
+1 (all x (humingbird(x) -> rich(x))) # label(non_clause).  [assumption].
+2 (all x (bird(x) & large(x) -> -honey(x))) # label(non_clause).  [assumption].
+3 (all x (bird(x) & -honey(x) -> -rich(x))) # label(non_clause).  [assumption].
+4 (all x (humingbird(x) -> bird(x))) # label(non_clause).  [assumption].
+5 (all x (humingbird(x) -> -large(x))) # label(non_clause) # label(goal).  [goal].
+
+============================== end of process non-clausal formulas ===
+
+============================== PROCESS INITIAL CLAUSES ===============
+
+% Clauses before input processing:
+
+formulas(usable).
+end_of_list.
+
+formulas(sos).
+-humingbird(x) | rich(x).  [clausify(1)].
+-bird(x) | -large(x) | -honey(x).  [clausify(2)].
+-bird(x) | honey(x) | -rich(x).  [clausify(3)].
+-humingbird(x) | bird(x).  [clausify(4)].
+humingbird(c1).  [deny(5)].
+large(c1).  [deny(5)].
+end_of_list.
+
+formulas(demodulators).
+end_of_list.
+
+============================== PREDICATE ELIMINATION =================
+
+Eliminating humingbird/1
+6 humingbird(c1).  [deny(5)].
+7 -humingbird(x) | rich(x).  [clausify(1)].
+8 -humingbird(x) | bird(x).  [clausify(4)].
+Derived: rich(c1).  [resolve(6,a,7,a)].
+Derived: bird(c1).  [resolve(6,a,8,a)].
+
+Eliminating bird/1
+9 bird(c1).  [resolve(6,a,8,a)].
+10 -bird(x) | -large(x) | -honey(x).  [clausify(2)].
+11 -bird(x) | honey(x) | -rich(x).  [clausify(3)].
+Derived: -large(c1) | -honey(c1).  [resolve(9,a,10,a)].
+Derived: honey(c1) | -rich(c1).  [resolve(9,a,11,a)].
+
+Eliminating large/1
+12 -large(c1) | -honey(c1).  [resolve(9,a,10,a)].
+13 large(c1).  [deny(5)].
+Derived: -honey(c1).  [resolve(12,a,13,a)].
+
+Eliminating rich/1
+14 honey(c1) | -rich(c1).  [resolve(9,a,11,a)].
+15 rich(c1).  [resolve(6,a,7,a)].
+Derived: honey(c1).  [resolve(14,b,15,a)].
+
+Eliminating honey/1
+16 honey(c1).  [resolve(14,b,15,a)].
+17 -honey(c1).  [resolve(12,a,13,a)].
+Derived: $F.  [resolve(16,a,17,a)].
+
+============================== end predicate elimination =============
+
+Auto_denials:  (no changes).
+
+Term ordering decisions:
+Predicate symbol precedence:  predicate_order([ ]).
+Function symbol precedence:  function_order([ ]).
+After inverse_order:  (no changes).
+Unfolding symbols: (none).
+
+Auto_inference settings:
+  % set(neg_binary_resolution).  % (HNE depth_diff=0)
+  % clear(ordered_res).  % (HNE depth_diff=0)
+  % set(ur_resolution).  % (HNE depth_diff=0)
+    % set(ur_resolution) -> set(pos_ur_resolution).
+    % set(ur_resolution) -> set(neg_ur_resolution).
+
+Auto_process settings:  (no changes).
+
+-------- Proof 1 --------
+
+============================== PROOF =================================
+
+% Proof 1 at 0.00 (+ 0.01) seconds.
+% Length of proof is 18.
+% Level of proof is 5.
+% Maximum clause weight is 0.000.
+% Given clauses 0.
+
+1 (all x (humingbird(x) -> rich(x))) # label(non_clause).  [assumption].
+2 (all x (bird(x) & large(x) -> -honey(x))) # label(non_clause).  [assumption].
+3 (all x (bird(x) & -honey(x) -> -rich(x))) # label(non_clause).  [assumption].
+4 (all x (humingbird(x) -> bird(x))) # label(non_clause).  [assumption].
+5 (all x (humingbird(x) -> -large(x))) # label(non_clause) # label(goal).  [goal].
+6 humingbird(c1).  [deny(5)].
+7 -humingbird(x) | rich(x).  [clausify(1)].
+8 -humingbird(x) | bird(x).  [clausify(4)].
+9 bird(c1).  [resolve(6,a,8,a)].
+10 -bird(x) | -large(x) | -honey(x).  [clausify(2)].
+11 -bird(x) | honey(x) | -rich(x).  [clausify(3)].
+12 -large(c1) | -honey(c1).  [resolve(9,a,10,a)].
+13 large(c1).  [deny(5)].
+14 honey(c1) | -rich(c1).  [resolve(9,a,11,a)].
+15 rich(c1).  [resolve(6,a,7,a)].
+16 honey(c1).  [resolve(14,b,15,a)].
+17 -honey(c1).  [resolve(12,a,13,a)].
+18 $F.  [resolve(16,a,17,a)].
+
+============================== end of proof ==========================
+
+============================== STATISTICS ============================
+
+Given=0. Generated=1. Kept=0. proofs=1.
+Usable=0. Sos=0. Demods=0. Limbo=0, Disabled=13. Hints=0.
+Kept_by_rule=0, Deleted_by_rule=0.
+Forward_subsumed=0. Back_subsumed=0.
+Sos_limit_deleted=0. Sos_displaced=0. Sos_removed=0.
+New_demodulators=0 (0 lex), Back_demodulated=0. Back_unit_deleted=0.
+Demod_attempts=0. Demod_rewrites=0.
+Res_instance_prunes=0. Para_instance_prunes=0. Basic_paramod_prunes=0.
+Nonunit_fsub_feature_tests=0. Nonunit_bsub_feature_tests=0.
+Megabytes=0.03.
+User_CPU=0.00, System_CPU=0.01, Wall_clock=0.
+
+============================== end of statistics =====================
+
+============================== end of search =========================
+
+THEOREM PROVED
+
+THEOREM PROVED
+
+Exiting with 1 proof.
+
+------ process 67058 exit (max_proofs) ------
